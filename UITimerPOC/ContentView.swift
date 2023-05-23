@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-
+    
     @State private var progressTimer: Double = 1.0
     @State private var count: Int = 10
     
@@ -18,7 +18,7 @@ struct ContentView: View {
         GeometryReader(content: { geometry in
             VStack(spacing: 15) {
                 ZStack {
- 
+                    
                     Circle()
                         .fill(.white.opacity(0.03))
                         .padding(-40)
@@ -41,6 +41,7 @@ struct ContentView: View {
                     Circle()
                         .trim(from: 0, to: progressTimer)
                         .stroke(Color.white.opacity(0.7), lineWidth: 10)
+                    ballKnobView
                 }
                 .padding()
                 .frame(height: geometry.size.width)
@@ -63,9 +64,25 @@ struct ContentView: View {
         .padding(50)
     }
     
-//   private var ballKnobView: some View {
-//
-//    }
+    private var ballKnobView: some View {
+        GeometryReader { knobGeo in
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 25, height: 25)
+                .overlay(
+                    Circle()
+                        .fill(.white)
+                        .padding(5)
+                )
+                .frame(
+                    width: knobGeo.size.width,
+                    height: knobGeo.size.height,
+                    alignment: .center
+                )
+                .offset(x: knobGeo.size.height / 2)
+                .rotationEffect(.degrees(progressTimer * 360))
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
